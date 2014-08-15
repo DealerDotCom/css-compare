@@ -1,0 +1,5 @@
+ok,
+not-ok, seriously not ok { 
+  go: 1px; background-color: #fff;
+}
+a>b>c+d { y: z; }
