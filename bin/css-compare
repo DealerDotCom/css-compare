@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var yargs = require('yargs');
+var csscomp = require('../css-compare');
+
+var opts = {
+  alias: {
+    t: 'test',
+    c: 'control',
+    l: 'label'
+  }
+};
+var argv = yargs.usage('Normalizes and compares CSS output.')
+
+.demand('t')
+.alias('t', 'test')
+.describe('t', 'Test file: diff to.')
+
+.demand('c')
+.alias('c', 'control')
+.describe('c', 'Control file: diff from.')
+
+.alias('l', 'label')
+.describe('l', 'Label: override filename to display in diff.')
+
+.argv;
+
+console.log(csscomp(argv.test, argv.control, argv.label));
