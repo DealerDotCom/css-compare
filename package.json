@@ -1,12 +1,13 @@
 {
   "name": "css-compare",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "main": "css-compare.js",
   "dependencies": {
     "color-parser": "^0.1.0",
     "diff": "^1.0.8",
-    "rework": "^1.0.0"
+    "rework": "^1.0.0",
+    "yargs": "^1.3.1"
   },
   "devDependencies": {
     "jasmine-node": "^1.14.5"
@@ -17,6 +18,10 @@
   "author": {
     "name": "Michael Hellein",
     "email": "michael@helle.in"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/michaek/css-compare.git"
   },
   "licenses": [
     {
