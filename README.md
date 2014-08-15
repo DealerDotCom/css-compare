@@ -15,4 +15,5 @@ The command `css-compare` is available upon installation.
     Options:
       -t, --test     Test file: diff to.                           [required]
       -c, --control  Control file: diff from.                      [required]
+      -o, --output   Output normalized CSS to a file.
       -l, --label    Label: override filename to display in diff.

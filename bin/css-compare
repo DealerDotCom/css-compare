@@ -7,7 +7,8 @@ var opts = {
   alias: {
     t: 'test',
     c: 'control',
-    l: 'label'
+    l: 'label',
+    o: 'output'
   }
 };
 var argv = yargs.usage('Normalizes and compares CSS output.')
@@ -20,9 +21,12 @@ var argv = yargs.usage('Normalizes and compares CSS output.')
 .alias('c', 'control')
 .describe('c', 'Control file: diff from.')
 
+.alias('o', 'output')
+.describe('o', 'Output normalized CSS to a file. (optional)')
+
 .alias('l', 'label')
 .describe('l', 'Label: override filename to display in diff.')
 
 .argv;
 
-console.log(csscomp(argv.test, argv.control, argv.label));
+console.log(csscomp(argv.test, argv.control, argv.label, argv.output).diff);
