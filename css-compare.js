@@ -13,7 +13,7 @@ function colorString(value) {
   return c;
 }
 
-function standardize(root, rw) {
+function normalize(root, rw) {
   // TODO: Use the source position to inform our diff?
 
   root.rules = root.rules.filter(function(rule){
@@ -42,9 +42,20 @@ function standardize(root, rw) {
   });
 }
 
-module.exports = function(test, control, label){
-  var one = rework(fs.readFileSync(control).toString()).use(standardize).toString();
-  var two = rework(fs.readFileSync(test).toString()).use(standardize).toString();
+module.exports = function(test, control, label, output){
+  var controlOutput = rework(fs.readFileSync(control).toString()).use(normalize).toString();
+  var testOutput = rework(fs.readFileSync(test).toString()).use(normalize).toString();
 
-  return diff.createPatch(label || test, one, two);
+  if (output) {
+    var controlPath = control.replace('.css', '-normalized.css');
+    var testPath = test.replace('.css', '-normalized.css');
+    fs.writeFileSync(controlPath, controlOutput);
+    fs.writeFileSync(testPath, testOutput);
+  }
+
+  return {
+    "diff": diff.createPatch(label || test, controlOutput, testOutput),
+    "control": controlOutput,
+    "test": testOutput
+  }
 }
