@@ -4,6 +4,7 @@ not-ok, seriously not ok {
   color: #000;
   background: url(white.gif) #FFF;
   border: 0.5em solid rgb(0, 1, 2);
+  padding: .5em 1em .3em;
 }
 a>b>c+d { y: z; }
 f { background: url('1.gif'); color: rgba(); }
