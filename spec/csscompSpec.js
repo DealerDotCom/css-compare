@@ -24,6 +24,9 @@ describe("Comparisons", function() {
 describe("Outputs", function() {
   it("should output", function() {
     var output = csscomp(fixture(files.test), fixture(files.control), files.test);
+    // Uncomment to rewrite test files.
+    // fs.writeFileSync(fixture(files.normalizedControl), output.control);
+    // fs.writeFileSync(fixture(files.normalizedTest), output.test);
     var expectedControl = fs.readFileSync(fixture(files.normalizedControl)).toString();
     var expectedTest = fs.readFileSync(fixture(files.normalizedTest)).toString();
     expect(output.control).toBe(expectedControl);

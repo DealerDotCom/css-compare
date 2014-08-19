@@ -1,5 +1,8 @@
 ok,
 not-ok, seriously not ok { 
-  go: 1px; background-color: #fff;
+  go: 0.1px;
+  color: #000;
+  background: url(white.gif) #FFF;
+  border: 0.5em solid rgb(0, 1, 2);
 }
 a>b>c+d { y: z; }

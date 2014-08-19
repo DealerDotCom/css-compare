@@ -2,6 +2,6 @@
  A Comment
 */
 ok, not-ok , seriously
-not ok  { go: 1px; background-color: #FFF; }
+not ok  { go: 0.1px; color: black; background: url(white.gif) white; border: 0.5em solid rgba(0, 1, 2, 1); }
 
 a > b > c   + d { y: z; }

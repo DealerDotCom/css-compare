@@ -5,10 +5,17 @@ var fs = require('fs');
 var color = require('color-parser');
 var diff = require('diff');
 
+function parseColors(value) {
+  // Throw everything at colorString, and see what sticks.
+  return value.replace(/(#[0-9a-fA-F]{3,6}|rgba?\([0-9,\s]+\)|[^\s]+)/g, function(match){
+    return colorString(match) || match;
+  });
+}
+
 function colorString(value) {
   var c = color(value);
   if (c) {
-    c = 'rgba('+c.r+', '+c.g+', '+c.b+', '+(c.a||1)+');';
+    c = 'rgba('+c.r+', '+c.g+', '+c.b+', '+(c.a||1)+')';
   }
   return c;
 }
@@ -32,7 +39,7 @@ function normalize(root, rw) {
     if (rule.declarations) {
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
-          declaration.value = colorString(declaration.value) || declaration.value;
+          declaration.value = parseColors(declaration.value);
           declaration.value = declaration.value
             .replace(/,\s*/g, ', ')
             .replace(/'/g, '"');
