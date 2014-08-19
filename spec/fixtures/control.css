@@ -6,3 +6,4 @@ not-ok, seriously not ok {
   border: 0.5em solid rgb(0, 1, 2);
 }
 a>b>c+d { y: z; }
+f { background: url('1.gif');}

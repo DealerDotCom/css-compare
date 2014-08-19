@@ -20,6 +20,13 @@ function colorString(value) {
   return c;
 }
 
+function floatString(value) {
+  // Units from https://developer.mozilla.org/en-US/docs/Web/CSS/length
+  return value.replace(/([^0-9]|^)(\.[0-9]+)(em|ex|ch|rem|vh|vw|vmin|vmax|px|mm|cm|in|pt|pc|%)/g, function(match, left, right, unit){
+    return (left || 0) + right + unit;
+  });
+}
+
 function normalize(root, rw) {
   // TODO: Use the source position to inform our diff?
 
@@ -39,6 +46,7 @@ function normalize(root, rw) {
     if (rule.declarations) {
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
+          declaration.value = floatString(declaration.value);
           declaration.value = parseColors(declaration.value);
           declaration.value = declaration.value
             .replace(/,\s*/g, ', ')
