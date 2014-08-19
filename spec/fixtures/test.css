@@ -8,4 +8,5 @@ a > b > c   + d { y: z; }
 
 f {
   background: url('1.gif');
+  color: rgba(); 
 }

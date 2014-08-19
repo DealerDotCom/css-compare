@@ -13,4 +13,5 @@ a > b > c + d {
 
 f {
   background: url("1.gif");
+  color: rgba();
 }

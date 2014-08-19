@@ -8,7 +8,13 @@ var diff = require('diff');
 function parseColors(value) {
   // Throw everything at colorString, and see what sticks.
   return value.replace(/(#[0-9a-fA-F]{3,6}|rgba?\([0-9,\s]+\)|[^\s]+)/g, function(match){
-    return colorString(match) || match;
+    var colorMatch;
+
+    try {
+      colorMatch = colorString(match);
+    } catch (e) {}
+
+    return colorMatch || match;
   });
 }
 
