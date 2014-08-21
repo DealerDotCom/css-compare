@@ -7,4 +7,4 @@ not-ok, seriously not ok {
   padding: .5em 1em .3em;
 }
 a>b>c+d { y: z; }
-f { background: url('1.gif'); color: rgba(); }
+f {   opacity: 0.51; background: url('1.gif'); color: rgba(); }

@@ -27,9 +27,9 @@ function colorString(value) {
 }
 
 function floatString(value) {
-  // Units from https://developer.mozilla.org/en-US/docs/Web/CSS/length
-  return value.replace(/([^0-9]|^)(\.[0-9]+)(em|ex|ch|rem|vh|vw|vmin|vmax|px|mm|cm|in|pt|pc|%)/g, function(match, left, right, unit){
-    return (left.trim() ? left : left+'0') + right + unit;
+  return value.replace(/(.|^)(\.[0-9]+)/g, function(match, left, right){
+    var digit = !isNaN(parseInt(left.trim(), 10));
+    return (digit ? left : left+'0') + right;
   });
 }
 
