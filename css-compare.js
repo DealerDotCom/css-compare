@@ -37,6 +37,9 @@ function normalize(root, rw) {
   // TODO: Use the source position to inform our diff?
 
   root.rules = root.rules.filter(function(rule){
+    if (rule.declarations) {
+      return rule.declarations.length > 0;
+    }
     return rule.type !== 'comment';
   });
 
@@ -49,7 +52,7 @@ function normalize(root, rw) {
       });
     }
 
-    if (rule.declarations) {
+    if (rule.declarations.length) {
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
           declaration.value = floatString(declaration.value);
