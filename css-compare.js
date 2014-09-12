@@ -52,7 +52,7 @@ function normalize(root, rw) {
       });
     }
 
-    if (rule.declarations.length) {
+    if (rule.declarations && rule.declarations.length) {
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
           declaration.value = floatString(declaration.value);
