@@ -4,6 +4,7 @@ var rework = require('rework');
 var fs = require('fs');
 var color = require('color-parser');
 var diff = require('diff');
+var _ = require('lodash');
 
 function parseColors(value) {
   // Throw everything at colorString, and see what sticks.
@@ -67,19 +68,35 @@ function normalize(root, rw) {
 }
 
 module.exports = function(test, control, label, output){
-  var controlOutput = rework(fs.readFileSync(control).toString()).use(normalize).toString();
-  var testOutput = rework(fs.readFileSync(test).toString()).use(normalize).toString();
+  var processed = _.mapValues({
+    test: test,
+    control: control
+  }, function(path) {
+    var rw = rework(fs.readFileSync(path).toString()).use(normalize);
+    var css = rw.toString();
+    var selectors = _.chain(rw.obj.stylesheet.rules)
+      .map('selectors')
+      .flatten()
+      .value();
 
-  if (output) {
-    var controlPath = control.replace('.css', '-normalized.css');
-    var testPath = test.replace('.css', '-normalized.css');
-    fs.writeFileSync(controlPath, controlOutput);
-    fs.writeFileSync(testPath, testOutput);
-  }
+    if (output) {
+      var normalizedPath = path.replace('.css', '-normalized.css');
+      fs.writeFileSync(normalizedPath, css);
+    }
+
+    return {
+      selectors: selectors,
+      css: css
+    }
+  });
 
   return {
-    "diff": diff.createPatch(label || test, controlOutput, testOutput),
-    "control": controlOutput,
-    "test": testOutput
+    "diff": diff.createPatch(label || test, processed.control.css, processed.test.css),
+    "selectors": {
+      added: _.difference(processed.test.selectors, processed.control.selectors),
+      removed: _.difference(processed.control.selectors, processed.test.selectors)
+    },
+    "control": processed.control.css,
+    "test": processed.test.css
   }
 }
