@@ -27,6 +27,9 @@ var argv = yargs.usage('Normalizes and compares CSS output.')
 .alias('l', 'label')
 .describe('l', 'Label: override filename to display in diff.')
 
+.alias('e', 'extensions')
+.describe('e', 'Extensions: comma-separated list of extensions to use.')
+
 .argv;
 
-console.log(csscomp(argv.test, argv.control, argv.label, argv.output).diff);
+console.log(csscomp(argv.test, argv.control, argv).diff);

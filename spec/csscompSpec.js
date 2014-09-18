@@ -15,7 +15,7 @@ function fixture(filename) {
 
 describe("Comparisons", function() {
   it("should compare", function() {
-    var diff = csscomp(fixture(files.test), fixture(files.control), files.test).diff;
+    var diff = csscomp(fixture(files.test), fixture(files.control), {label: files.test}).diff;
     var expected = fs.readFileSync(fixture(files.expected)).toString();
     expect(diff).toBe(expected);
   });
@@ -23,7 +23,7 @@ describe("Comparisons", function() {
 
 describe("Outputs", function() {
   it("should output", function() {
-    var output = csscomp(fixture(files.test), fixture(files.control), files.test);
+    var output = csscomp(fixture(files.test), fixture(files.control), {label: files.test});
     // Uncomment to rewrite test files.
     // fs.writeFileSync(fixture(files.normalizedControl), output.control);
     // fs.writeFileSync(fixture(files.normalizedTest), output.test);
@@ -34,4 +34,12 @@ describe("Outputs", function() {
   });
 });
 
+describe("Extensions", function(){
+  it("should remove compass stuff", function(){
 
+    var diff = csscomp(fixture('extensions/'+files.test), fixture('extensions/'+files.control), {label: files.test, extensions:'compass'}).diff;
+    var expected = fs.readFileSync(fixture('extensions/'+files.expected)).toString();
+    expect(diff).toBe(expected);
+
+  });
+});

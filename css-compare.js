@@ -67,12 +67,28 @@ function normalize(root, rw) {
   });
 }
 
-module.exports = function(test, control, label, output){
+var extensions = {
+  compass: function(root, rw) {
+    
+  }
+};
+
+module.exports = function(test, control, options){
+  options = options || {};
+  var label = options.label;
+  var output = options.output;
+  var usedExtensions = (options.extensions||'').split(',')
+
   var processed = _.mapValues({
     test: test,
     control: control
   }, function(path) {
     var rw = rework(fs.readFileSync(path).toString()).use(normalize);
+    _.chain(usedExtensions)
+      .map(function(e){ return extensions[e]; })
+      .compact()
+      .each(function(e){ rw.use(e); });
+
     var css = rw.toString();
     var selectors = _.chain(rw.obj.stylesheet.rules)
       .map('selectors')
