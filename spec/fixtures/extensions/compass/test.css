@@ -1,0 +1,6 @@
+.a {
+  background-image: -webkit-linear-gradient(#fff 0, rgba(235, 235, 235, 1) 100%);
+  background-image: -moz-linear-gradient(#fff 0, rgba(235, 235, 235, 1) 100%);
+  background-image: -o-linear-gradient(#fff 0, rgba(235, 235, 235, 1) 100%);
+  background-image: linear-gradient(#fff 0, rgba(235, 235, 235, 1) 100%);
+}

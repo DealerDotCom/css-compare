@@ -37,8 +37,8 @@ describe("Outputs", function() {
 describe("Extensions", function(){
   it("should remove compass stuff", function(){
 
-    var diff = csscomp(fixture('extensions/'+files.test), fixture('extensions/'+files.control), {label: files.test, extensions:'compass'}).diff;
-    var expected = fs.readFileSync(fixture('extensions/'+files.expected)).toString();
+    var diff = csscomp(fixture('extensions/compass/'+files.test), fixture('extensions/compass/'+files.control), {label: files.test, extensions:'compass'}).diff;
+    var expected = fs.readFileSync(fixture('extensions/compass/'+files.expected)).toString();
     expect(diff).toBe(expected);
 
   });

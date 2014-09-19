@@ -68,9 +68,7 @@ function normalize(root, rw) {
 }
 
 var extensions = {
-  compass: function(root, rw) {
-    
-  }
+  compass: require('./lib/extensions/compass')
 };
 
 module.exports = function(test, control, options){
