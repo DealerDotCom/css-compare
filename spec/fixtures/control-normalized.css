@@ -17,3 +17,9 @@ f {
   background: url("1.gif");
   color: rgba();
 }
+
+@media print {
+@page {
+    margin: 2cm 0.5cm;
+}
+}

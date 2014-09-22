@@ -13,3 +13,9 @@ f {
 }
 
 .tossing-empties {}
+
+@media print {
+  @page {
+    margin: 2cm .5cm;
+  }
+}

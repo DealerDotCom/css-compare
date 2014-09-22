@@ -44,7 +44,7 @@ function normalize(root, rw) {
     return rule.type !== 'comment';
   });
 
-  root.rules.forEach(function(rule){
+  var processRule = function(rule){
     if (rule.selectors) {
       rule.selectors = rule.selectors.map(function(selector){
         return selector
@@ -64,7 +64,13 @@ function normalize(root, rw) {
         }
       });
     }
-  });
+
+    if (rule.rules && rule.rules.length) {
+      rule.rules.forEach(processRule);
+    }
+  }
+
+  root.rules.forEach(processRule);
 }
 
 var extensions = {
