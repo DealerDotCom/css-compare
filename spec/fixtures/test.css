@@ -8,6 +8,7 @@ a > b > c   + d { y: z; }
 
 f {
   opacity: .51;
+  /* opacitation */
   background: url('1.gif');
   color: rgba(); 
 }

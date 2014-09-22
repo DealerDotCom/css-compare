@@ -39,11 +39,12 @@ function floatString(value) {
 function normalize(root, rw) {
   // TODO: Use the source position to inform our diff?
 
+  var filterComment = function(ruleOrDeclaration) {
+    return ruleOrDeclaration.type !== 'comment';
+  };
+
   var filterRule = function(rule){
-    if (rule.declarations) {
-      return rule.declarations.length > 0;
-    }
-    return rule.type !== 'comment';
+    return !rule.declarations || rule.declarations.length > 0;
   };
 
   var processRule = function(rule) {
@@ -56,6 +57,7 @@ function normalize(root, rw) {
     }
 
     if (rule.declarations && rule.declarations.length) {
+      rule.declarations = rule.declarations.filter(filterComment);
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
           declaration.value = floatString(declaration.value);
@@ -68,12 +70,12 @@ function normalize(root, rw) {
     }
 
     if (rule.rules && rule.rules.length) {
-      rule.rules = rule.rules.filter(filterRule);
+      rule.rules = rule.rules.filter(filterRule).filter(filterComment);
       rule.rules.forEach(processRule);
     }
   }
 
-  root.rules = root.rules.filter(filterRule);
+  root.rules = root.rules.filter(filterRule).filter(filterComment);
   root.rules.forEach(processRule);
 }
 
