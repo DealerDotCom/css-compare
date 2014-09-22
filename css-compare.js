@@ -28,9 +28,11 @@ function colorString(value) {
 }
 
 function floatString(value) {
-  return value.replace(/(.|^)(\.[0-9]+)/g, function(match, left, right){
+  return value.replace(/(.|^)\.([0-9]+)/g, function(match, left, right){
+    // TODO: Don't do all this string mojo on numbers.
+    
     var digit = !isNaN(parseInt(left.trim(), 10));
-    return (digit ? left : left+'0') + right;
+    return (digit ? left : left+'0') + '.' + right.replace(/0+$/, '');
   });
 }
 
