@@ -15,6 +15,9 @@ f {
 .tossing-empties {}
 
 @media print {
+  /*
+   A nested comment.
+  */
   @page {
     margin: 2cm .5cm;
   }

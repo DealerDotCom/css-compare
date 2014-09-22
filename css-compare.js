@@ -30,7 +30,7 @@ function colorString(value) {
 function floatString(value) {
   return value.replace(/(.|^)\.([0-9]+)/g, function(match, left, right){
     // TODO: Don't do all this string mojo on numbers.
-    
+
     var digit = !isNaN(parseInt(left.trim(), 10));
     return (digit ? left : left+'0') + '.' + right.replace(/0+$/, '');
   });
@@ -39,14 +39,14 @@ function floatString(value) {
 function normalize(root, rw) {
   // TODO: Use the source position to inform our diff?
 
-  root.rules = root.rules.filter(function(rule){
+  var filterRule = function(rule){
     if (rule.declarations) {
       return rule.declarations.length > 0;
     }
     return rule.type !== 'comment';
-  });
+  };
 
-  var processRule = function(rule){
+  var processRule = function(rule) {
     if (rule.selectors) {
       rule.selectors = rule.selectors.map(function(selector){
         return selector
@@ -68,10 +68,12 @@ function normalize(root, rw) {
     }
 
     if (rule.rules && rule.rules.length) {
+      rule.rules = rule.rules.filter(filterRule);
       rule.rules.forEach(processRule);
     }
   }
 
+  root.rules = root.rules.filter(filterRule);
   root.rules.forEach(processRule);
 }
 
