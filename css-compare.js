@@ -8,7 +8,7 @@ var _ = require('lodash');
 
 function parseColors(value) {
   // Throw everything at colorString, and see what sticks.
-  return value.replace(/(#[0-9a-fA-F]{3,6}|rgba?\([0-9,\s]+\)|[^\s]+)/g, function(match){
+  return value.replace(/(#[0-9a-fA-F]{3,6}|rgba?\([0-9,\s]+\)|[a-zA-Z._]+)/g, function(match){
     var colorMatch;
 
     try {
@@ -32,8 +32,23 @@ function floatString(value) {
     // TODO: Don't do all this string mojo on numbers.
 
     var digit = !isNaN(parseInt(left.trim(), 10));
-    return (digit ? left : left+'0') + '.' + right.replace(/0+$/, '');
+    right = right.replace(/0+$/, '');
+    return (digit ? left : left+'0') + (right ? '.' + right : '');
   });
+}
+
+function urlString(value) {
+  if (value.indexOf('url(') !== -1) {
+    value = value.replace(/url\(['"]([^)]+)['"]\)/g, 'url($1)');
+  }
+  return value;
+}
+
+function parenString(value) {
+  if (value.indexOf('(') !== -1) {
+    value = value.replace(/\(\s+/g, '(').replace(/\s+\)/g, ')');
+  }
+  return value;
 }
 
 function normalize(root, rw) {
@@ -60,8 +75,9 @@ function normalize(root, rw) {
       rule.declarations = rule.declarations.filter(filterComment);
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
-          declaration.value = floatString(declaration.value);
-          declaration.value = parseColors(declaration.value);
+          [floatString, parseColors, urlString, parenString].forEach(function(processor){
+            declaration.value = processor(declaration.value);
+          });
           declaration.value = declaration.value
             .replace(/,\s*/g, ', ')
             .replace(/'/g, '"');
