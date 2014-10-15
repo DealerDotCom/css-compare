@@ -51,6 +51,9 @@ function spaceString(value) {
   if (value.indexOf('/') !== -1) {
     value = value.replace(/\s*\/\s*/g, '/');
   }
+  if (value.indexOf(',') !== -1) {
+    value = value.replace(/\,\s*/g, ', ');
+  }
 
   return value.replace(/\s+/g, ' ');
 }

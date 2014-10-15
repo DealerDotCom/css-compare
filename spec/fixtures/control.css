@@ -6,6 +6,7 @@ not-ok, seriously not ok {
   background: url(white.gif) #FFF;
   border: 0.5em solid  rgb(0, 1, 2);
   padding: .5em  1em .30em;
+  font-family: serif, sans-serif;
 }
 a>b>c+d { y: z; }
 f {   opacity: 0.51; background: url(1.gif); color: rgba(); font-size: 1em / 1.5em; }
