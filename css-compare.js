@@ -44,11 +44,15 @@ function urlString(value) {
   return value;
 }
 
-function parenString(value) {
+function spaceString(value) {
   if (value.indexOf('(') !== -1) {
     value = value.replace(/\(\s+/g, '(').replace(/\s+\)/g, ')');
   }
-  return value;
+  if (value.indexOf('/') !== -1) {
+    value = value.replace(/\s*\/\s*/g, '/');
+  }
+
+  return value.replace(/\s+/g, ' ');
 }
 
 function normalize(root, rw) {
@@ -71,15 +75,18 @@ function normalize(root, rw) {
       });
     }
 
+    if (rule.type == 'media') {
+      rule.media = spaceString(rule.media);
+    }
+
     if (rule.declarations && rule.declarations.length) {
       rule.declarations = rule.declarations.filter(filterComment);
       rule.declarations.forEach(function(declaration){
         if (declaration.value) {
-          [floatString, parseColors, urlString, parenString].forEach(function(processor){
+          [floatString, parseColors, urlString, spaceString].forEach(function(processor){
             declaration.value = processor(declaration.value);
           });
           declaration.value = declaration.value
-            .replace(/,\s*/g, ', ')
             .replace(/'/g, '"');
         }
       });

@@ -4,9 +4,12 @@ not-ok, seriously not ok {
   opacity: 1.0;
   color: #000;
   background: url(white.gif) #FFF;
-  border: 0.5em solid rgb(0, 1, 2);
-  padding: .5em 1em .30em;
+  border: 0.5em solid  rgb(0, 1, 2);
+  padding: .5em  1em .30em;
 }
 a>b>c+d { y: z; }
-f {   opacity: 0.51; background: url(1.gif); color: rgba(); }
+f {   opacity: 0.51; background: url(1.gif); color: rgba(); font-size: 1em / 1.5em; }
 @media print { @page { margin: 2cm 0.5cm; } }
+@media only screen and (-o-min-device-pixel-ratio: 3/2) {
+  g { y: z; }
+}

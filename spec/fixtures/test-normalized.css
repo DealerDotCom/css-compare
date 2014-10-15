@@ -17,10 +17,17 @@ f {
   opacity: 0.51;
   background: url(1.gif);
   color: rgba();
+  font-size: 1em/1.5em;
 }
 
 @media print {
 @page {
     margin: 2cm 0.5cm;
 }
+}
+
+@media only screen and (-o-min-device-pixel-ratio: 3/2) {
+  g {
+    y: z;
+  }
 }
