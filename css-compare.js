@@ -99,6 +99,10 @@ function normalize(root, rw) {
       rule.rules = rule.rules.filter(filterRule).filter(filterComment);
       rule.rules.forEach(processRule);
     }
+
+    if (rule.keyframes && rule.keyframes.length) {
+      rule.keyframes.forEach(processRule);
+    }
   }
 
   root.rules = root.rules.filter(filterRule).filter(filterComment);
