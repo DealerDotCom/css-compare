@@ -110,7 +110,8 @@ function normalize(root, rw) {
 }
 
 var extensions = {
-  compass: require('./lib/extensions/compass')
+  compass: require('./lib/extensions/compass'),
+  libsassupdate: require('./lib/extensions/libsassupdate'),
 };
 
 module.exports = function(test, control, options){
