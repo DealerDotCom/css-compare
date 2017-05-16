@@ -147,8 +147,10 @@ module.exports = function(test, control, options){
     }
   });
 
+  var different = processed.control.css !== processed.test.css;
+
   return {
-    "diff": diff.createPatch(label || test, processed.control.css, processed.test.css),
+    "diff": different ? diff.createPatch(label || test, processed.control.css, processed.test.css) : null,
     "selectors": {
       added: _.difference(processed.test.selectors, processed.control.selectors),
       removed: _.difference(processed.control.selectors, processed.test.selectors)

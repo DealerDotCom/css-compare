@@ -32,4 +32,7 @@ var argv = yargs.usage('Normalizes and compares CSS output.')
 
 .argv;
 
-console.log(csscomp(argv.test, argv.control, argv).diff);
+var diff = csscomp(argv.test, argv.control, argv).diff;
+if (diff) {
+	console.log(diff);
+}
