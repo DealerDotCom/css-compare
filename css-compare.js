@@ -113,6 +113,28 @@ function normalize(root, rw) {
   root.rules.forEach(processRule);
 }
 
+function normalizeAfterExtensions(root, rw) {
+  var processRule = function(rule) {
+    if (rule.declarations && rule.declarations.length) {
+      rule.declarations.forEach(function(declaration){
+        if (declaration.value) {
+          declaration.value = spaceString(declaration.value);
+        }
+      });
+    }
+
+    if (rule.rules && rule.rules.length) {
+      rule.rules.forEach(processRule);
+    }
+
+    if (rule.keyframes && rule.keyframes.length) {
+      rule.keyframes.forEach(processRule);
+    }
+  }
+
+  root.rules.forEach(processRule);
+}
+
 var extensions = {
   compass: require('./lib/extensions/compass'),
   libsassupdate: require('./lib/extensions/libsassupdate'),
@@ -133,6 +155,8 @@ module.exports = function(test, control, options){
       .map(function(e){ return extensions[e]; })
       .compact()
       .each(function(e){ rw.use(e); });
+
+    rw.use(normalizeAfterExtensions);
 
     var css = rw.toString();
     var selectors = _.chain(rw.obj.stylesheet.rules)
