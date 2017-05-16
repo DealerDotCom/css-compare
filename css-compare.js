@@ -20,9 +20,13 @@ function parseColors(value) {
 }
 
 function colorString(value) {
+  if (value === 'transparent') {
+    return 'rgba(0, 0, 0, 0)';
+  }
+
   var c = color(value);
   if (c) {
-    c = 'rgba('+c.r+', '+c.g+', '+c.b+', '+(c.a||1)+')';
+    c = 'rgba('+c.r+', '+c.g+', '+c.b+', '+(c.a === undefined ? 1 : c.a)+')';
   }
   return c;
 }
