@@ -138,6 +138,7 @@ function normalizeAfterExtensions(root, rw) {
 var extensions = {
   compass: require('./lib/extensions/compass'),
   libsassupdate: require('./lib/extensions/libsassupdate'),
+  removeprefixes: require('./lib/extensions/removeprefixes')
 };
 
 module.exports = function(test, control, options){
