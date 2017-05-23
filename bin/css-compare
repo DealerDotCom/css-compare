@@ -30,6 +30,8 @@ var argv = yargs.usage('Normalizes and compares CSS output.')
 .alias('e', 'extensions')
 .describe('e', 'Extensions: comma-separated list of extensions to use.')
 
+.describe('context', 'Provide diff context.')
+
 .argv;
 
 var diff = csscomp(argv.test, argv.control, argv).diff;

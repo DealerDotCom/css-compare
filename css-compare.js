@@ -141,6 +141,17 @@ var extensions = {
   removeprefixes: require('./lib/extensions/removeprefixes')
 };
 
+function createDiff(fileName, oldStr, newStr, options) {
+  return diff.createPatch(fileName, oldStr, newStr).split("\n").filter(function(line) {
+    if (options.context) {
+      return true;
+    }
+
+    const trimmed = line.trimRight();
+    return trimmed !== "+" && trimmed !== "-" && (trimmed.indexOf('-') === 0 || trimmed.indexOf('+') === 0)
+  }).join("\n");
+}
+
 module.exports = function(test, control, options){
   options = options || {};
   var label = options.label;
@@ -179,7 +190,7 @@ module.exports = function(test, control, options){
   var different = processed.control.css !== processed.test.css;
 
   return {
-    "diff": different ? diff.createPatch(label || test, processed.control.css, processed.test.css) : null,
+    "diff": different ? createDiff(label || test, processed.control.css, processed.test.css, options) : null,
     "selectors": {
       added: _.difference(processed.test.selectors, processed.control.selectors),
       removed: _.difference(processed.control.selectors, processed.test.selectors)
