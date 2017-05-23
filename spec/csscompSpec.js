@@ -15,7 +15,7 @@ function fixture(filename) {
 
 describe("Comparisons", function() {
   it("should compare", function() {
-    var diff = csscomp(fixture(files.test), fixture(files.control), {label: files.test}).diff;
+    var diff = csscomp(fixture('general/'+files.test), fixture('general/'+files.control), {label: files.test}).diff;
     //var expected = fs.readFileSync(fixture(files.expected)).toString();
     expect(diff).toBe(null);
   });
@@ -23,12 +23,12 @@ describe("Comparisons", function() {
 
 describe("Outputs", function() {
   it("should output", function() {
-    var output = csscomp(fixture(files.test), fixture(files.control), {label: files.test});
+    var output = csscomp(fixture('general/'+files.test), fixture('general/'+files.control), {label: files.test});
     // Uncomment to rewrite test files.
     // fs.writeFileSync(fixture(files.normalizedControl), output.control);
     // fs.writeFileSync(fixture(files.normalizedTest), output.test);
-    var expectedControl = fs.readFileSync(fixture(files.normalizedControl)).toString();
-    var expectedTest = fs.readFileSync(fixture(files.normalizedTest)).toString();
+    var expectedControl = fs.readFileSync(fixture('general/'+files.normalizedControl)).toString();
+    var expectedTest = fs.readFileSync(fixture('general/'+files.normalizedTest)).toString();
     expect(output.control).toBe(expectedControl);
     expect(output.test).toBe(expectedTest);
   });
