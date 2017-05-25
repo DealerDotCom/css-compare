@@ -32,6 +32,8 @@ var argv = yargs.usage('Normalizes and compares CSS output.')
 
 .describe('context', 'Provide diff context.')
 
+.describe('similar-colors', 'Excludes diffs for similar colors (rgb each within 1).')
+
 .argv;
 
 var diff = csscomp(argv.test, argv.control, argv).diff;

@@ -13,6 +13,13 @@ function fixture(filename) {
   return fs.realpathSync('./spec/fixtures/'+filename);
 }
 
+function diffFixtures(dir, options) {
+  var options = options || {};
+  var diff = csscomp(fixture(dir+files.test), fixture(dir+files.control), Object.assign(options, {label: files.test})).diff;
+  var expected = fs.readFileSync(fixture(dir+files.expected)).toString();
+  expect(diff).toBe(expected);
+}
+
 describe("Comparisons", function() {
   it("should compare", function() {
     var diff = csscomp(fixture('general/'+files.test), fixture('general/'+files.control), {label: files.test}).diff;
@@ -41,5 +48,23 @@ describe("Extensions", function(){
     //var expected = fs.readFileSync(fixture('extensions/compass/'+files.expected)).toString();
     expect(diff).toBe(null);
 
+  });
+});
+
+describe("Colors", function(){
+  it("should be filtered from the diff if the rgba values are the same", function(){
+    diffFixtures('similar-colors/same/', {"similar-colors": true});
+  });
+
+  it("should not be filtered from the diff if the rgba values are outside a specified tolerance", function(){
+    diffFixtures('similar-colors/different/', {"similar-colors": true});
+  });
+
+  it("should be filtered from the diff if the rgba values are within a specified tolerance", function(){
+    diffFixtures('similar-colors/within-tolerance/', {"similar-colors": true});
+  });
+
+  it("should be filtered from any property name", function(){
+    diffFixtures('similar-colors/names/', {"similar-colors": true});
   });
 });

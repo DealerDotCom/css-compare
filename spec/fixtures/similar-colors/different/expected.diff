@@ -1,0 +1,6 @@
+--- test.css
++++ test.css
+-  opacity: 1;
+-  color: rgba(127, 127, 127, 0);
++  opacity: 0.9;
++  color: rgba(127, 127, 129, 0);
