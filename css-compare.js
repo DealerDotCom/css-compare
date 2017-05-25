@@ -226,8 +226,7 @@ function filterSimilarColors(patchLines) {
   //    ...
   //  ]
   const ALLOWED_PROPERTIES = [
-    "color",
-    "background-color",
+    "border",
   ];
   const lineFilter = (line) => {
     const rgbaCount = (line.text.match(/rgba\(/g) || []).length;
@@ -237,8 +236,9 @@ function filterSimilarColors(patchLines) {
       throw new Error("More than one rgba per line. Investigate!");
     }
 
-    return rgbaCount === 1 &&
-      (match && ALLOWED_PROPERTIES.includes(match[1]));
+    const allowedProperty = match && (match[1].includes("color") || ALLOWED_PROPERTIES.includes(match[1]));
+
+    return rgbaCount === 1 && allowedProperty;
   }
 
   chunks.forEach((chunk) => {
